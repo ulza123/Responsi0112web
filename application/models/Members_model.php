@@ -108,5 +108,17 @@ class Members_model extends CI_model {
 
 }
 
+    public function add($post)
+    {
+        $data = $this->db->insert('members', $post);
+        if($data){
+            $msg = "Input data member berhasil";
+            return array('sts'=>true, 'msg'=>$msg);
+        }else{
+            $msg = $this->db->error();
+            return array('sts'=>false, 'msg'=>$msg);
+        }
+    }
+
 }
 

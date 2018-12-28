@@ -16,6 +16,43 @@ class Members extends CI_Controller {
         // if($this->input->post('keyword')){
         //     $data['mahasiswa'] = $this->Mahasiswa_model->cariDataMahasiswa();
         // }
+        // Upload CSV
+            $file = $_FILES;
+        if(!empty($file)){
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'csv';
+            $config['max_size']             = 100;
+            $this->load->library('upload', $config);
+            if ( !$this->upload->do_upload('csv')){
+                $data['error'] = $this->upload->display_errors();   
+            }else{
+                $newfile = $this->upload->data();
+           
+                $handle = fopen($config['upload_path'].$newfile['file_name'], "r");
+                $i = 1; $data['ok'] = ""; $data['error'] = "";
+                while (($dt = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    // proses simpan ke db
+                    $in['fullname'] = $dt[0];
+                    $in['email'] = $dt[1];
+                    $in['address'] = $dt[2];
+                    $in['idcompany'] = $dt[3];
+                    $in['idcity'] = $dt[4];    
+                    $add = $this->Members_model->add($in);
+                    if($add['sts']){
+                        $data['ok'] .= "Baris ke ".$i.": ".$add['msg']."<br />";
+                        
+                    }else{
+                        $data['error'] .= "Baris ke ".$i.": ".$add['msg']."<br />";
+                        
+                    }
+                    $i++;   
+                }
+                fclose($handle);
+            }
+        }
+
+
+
         $this->load->view('templates/header',$data);
         $this->load->view('members/index');
         $this->load->view('templates/footer');

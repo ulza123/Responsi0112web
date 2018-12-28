@@ -1,3 +1,5 @@
+<?php if(isset($ok)):?><div class="alert alert-info"><?php echo $ok?></div><?php endif;?>
+<?php if(isset($error)):?><div class="alert alert-danger"><?php echo $error?></div><?php endif;?>
 <div class="container">
 <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div> 
 <?php if($this->session->flashdata('flash')): ?>
@@ -14,11 +16,23 @@
 
 </div> -->
 <?php endif; ?>
+<div class="row mt-4">
+
+</div>
 
 	<div class="row mt-4">
 		<div class="col-md-3">
 			<a href="<?=base_url(); ?>members/tambah" class="btn btn-success">Tambah Data</a>
 		</div>
+    <div class="col-md-6 float-right">
+    <form action="" method="post" enctype="multipart/form-data" class="form-inline">
+    <label>File Csv</label> 
+    <div class="form-group">
+      <input type="file" class="form-control" name="csv">
+    </div>
+    <button id="save" class="btn btn-primary">Import Csv</button>
+    </form>
+  </div>
 	</div>
 
 	<div class="row mt-2">
