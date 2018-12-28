@@ -96,7 +96,7 @@ class Members_model extends CI_model {
             "fullname" => $this->input->post('fullname',true),
             "email" => $this->input->post('email',true),
             "address" => $this->input->post('address',true),
-            "foto" => $foto,
+            // "foto" => $foto,
             "idcompany" => $this->input->post('company',true),
             "idcity" => $this->input->post('city',true)
         ];
